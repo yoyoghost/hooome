@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.hooo.dao.trade.mapper.TradeStockInfoMapper">
+    <insert id="insert" parameterType="me.hooo.dao.trade.model.TradeStockInfoDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO trade_stock_info (
+        stock_code,
+        stock_name,
+        stock_type,
+        stock_minimum_holding_period,
+        stock_status,
+        stock_remark,
+        create_user,
+        create_user_name,
+        update_user,
+        update_user_name
+        )
+        VALUES (
+        <choose>
+            <when test="stockCode != null and stockCode != ''">
+                #{stockCode},
+            </when>
+            <otherwise>
+                '',
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="stockName != null and stockName != ''">
+                #{stockName},
+            </when>
+            <otherwise>
+                '',
+            </otherwise>
+        </choose>
+        <if test="stockType != null">
+            #{stockType},
+        </if>
+        <if test="stockMinimumHoldingPeriod != null">
+            #{stockMinimumHoldingPeriod},
+        </if>
+        <if test="stockStatus != null">
+            #{stockStatus},
+        </if>
+        <choose>
+            <when test="stockRemark != null and stockRemark != ''">
+                #{stockRemark},
+            </when>
+            <otherwise>
+                '',
+            </otherwise>
+        </choose>
+        <if test="createUser != null">
+            #{createUser},
+        </if>
+        <choose>
+            <when test="createUserName != null and createUserName != ''">
+                #{createUserName},
+            </when>
+            <otherwise>
+                '',
+            </otherwise>
+        </choose>
+        <if test="updateUser != null">
+            #{updateUser},
+        </if>
+        <choose>
+            <when test="updateUserName != null and updateUserName != ''">
+                #{updateUserName},
+            </when>
+            <otherwise>
+                ''
+            </otherwise>
+        </choose>
+        )
+    </insert>
+</mapper>

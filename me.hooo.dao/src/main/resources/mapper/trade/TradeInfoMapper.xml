@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.hooo.dao.trade.mapper.TradeInfoMapper">
+    <insert id="insert" parameterType="me.hooo.dao.trade.model.TradeInfoDO" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO trade_info (
+        account_id,
+        parent_trade_info_id,
+        stock_id,
+        stock_name,
+        trade_date,
+        trade_point,
+        trade_number,
+        trade_amount,
+        trade_type,
+        trade_remaining_number,
+        trade_status,
+        create_user,
+        create_user_name,
+        update_user,
+        update_user_name,
+        )
+        <trim prefix="VALUES" suffixOverrides=")">
+            <trim prefix="(" suffix=")" suffixOverrides=", ">
+                #{accountId,jdbcType=BIGINT},
+                #{parentTradeInfoId,jdbcType=BIGINT},
+                #{stockId,jdbcType=BIGINT},
+                <if test="stockName != null">
+                    #{stockName,jdbcType=VARCHAR},
+                </if>
+                <if test="tradeDate != null">
+                    #{tradeDate,jdbcType=DATE},
+                </if>
+                <if test="tradePoint != null">
+                    #{tradePoint,jdbcType=DATE},
+                </if>
+                #{tradeNumber,jdbcType=INTEGER},
+                #{tradeAmount,jdbcType=DOUBLE},
+                #{tradeType,jdbcType=TINYINT},
+                #{tradeRemainingNumber,jdbcType=INTEGER},
+                #{tradeStatus,jdbcType=TINYINT},
+                #{createUser,jdbcType=BIGINT},
+                <if test="createUserName != null and createUserName != ''">
+                    #{createUserName,jdbcType=VARCHAR},
+                </if>
+                #{updateUser,jdbcType=BIGINT},
+                <if test="updateUserName != null and updateUserName != ''">
+                    #{updateUserName,jdbcType=VARCHAR},
+                </if>
+            </trim>
+        </trim>
+    </insert>
+</mapper>
