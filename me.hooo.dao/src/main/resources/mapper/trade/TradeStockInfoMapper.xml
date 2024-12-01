@@ -8,11 +8,7 @@
         stock_type,
         stock_minimum_holding_period,
         stock_status,
-        stock_remark,
-        create_user,
-        create_user_name,
-        update_user,
-        update_user_name
+        stock_remark
         )
         VALUES (
         <choose>
@@ -42,29 +38,7 @@
         </if>
         <choose>
             <when test="stockRemark != null and stockRemark != ''">
-                #{stockRemark},
-            </when>
-            <otherwise>
-                '',
-            </otherwise>
-        </choose>
-        <if test="createUser != null">
-            #{createUser},
-        </if>
-        <choose>
-            <when test="createUserName != null and createUserName != ''">
-                #{createUserName},
-            </when>
-            <otherwise>
-                '',
-            </otherwise>
-        </choose>
-        <if test="updateUser != null">
-            #{updateUser},
-        </if>
-        <choose>
-            <when test="updateUserName != null and updateUserName != ''">
-                #{updateUserName},
+                #{stockRemark}
             </when>
             <otherwise>
                 ''
@@ -72,4 +46,7 @@
         </choose>
         )
     </insert>
+    <select id="selectList" resultType="me.hooo.dao.trade.model.TradeStockInfoDO">
+        SELECT * FROM trade_stock_info WHERE deleted = 0
+    </select>
 </mapper>
