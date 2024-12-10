@@ -3,6 +3,7 @@ package me.hooo.service.trade.impl;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import me.hooo.common.trade.TradeConst;
+import me.hooo.common.trade.vo.StockStatusVO;
 import me.hooo.common.trade.vo.StockTypeVO;
 import me.hooo.common.trade.vo.TradeStockInfoVO;
 import me.hooo.dao.trade.model.TradeStockInfoDO;
@@ -42,6 +43,7 @@ public class TradeServiceImpl implements ITradeService {
         tradeStockInfoDO.setStockStatus(TradeConst.StockStatusEnum.ENABLE.getCode());
         tradeManager.addStockInfo(tradeStockInfoDO);
         tradeStockInfoVO.setId(tradeStockInfoDO.getId());
+        tradeStockInfoVO.setStockStatus(tradeStockInfoDO.getStockStatus());
         return tradeStockInfoVO;
     }
 
@@ -57,6 +59,17 @@ public class TradeServiceImpl implements ITradeService {
             BeanUtils.copyProperties(tradeStockInfoDO, vo);
             list.add(vo);
         }
+        return list;
+    }
+
+    @Override
+    public List<StockStatusVO> getStockStatus() {
+        TradeConst.StockStatusEnum[] values = TradeConst.StockStatusEnum.values();
+        List<StockStatusVO> list = Lists.newArrayList();
+        for (TradeConst.StockStatusEnum value : values) {
+            list.add(StockStatusVO.builder().code(value.getCode()).desc(value.getDesc()).build());
+        }
+        log.info("getStockStatus:{}", list);
         return list;
     }
 }

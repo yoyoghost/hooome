@@ -2,6 +2,7 @@ package me.hooo.web.controller.trade;
 
 import lombok.extern.slf4j.Slf4j;
 import me.hooo.common.HooomeResponse;
+import me.hooo.common.trade.vo.StockStatusVO;
 import me.hooo.common.trade.vo.StockTypeVO;
 import me.hooo.common.trade.vo.TradeStockInfoVO;
 import me.hooo.service.trade.ITradeService;
@@ -28,6 +29,12 @@ public class TradeController {
     public HooomeResponse<List<StockTypeVO>> getStockTypes() {
         List<StockTypeVO> stockTypeVOList = tradeService.getStockTypes();
         return HooomeResponse.success(stockTypeVOList);
+    }
+
+    @PostMapping("getStockStatus")
+    public HooomeResponse<List<StockStatusVO>> getStockStatus() {
+        List<StockStatusVO> stockStatusVOList = tradeService.getStockStatus();
+        return HooomeResponse.success(stockStatusVOList);
     }
 
     @PostMapping("addStockInfo")

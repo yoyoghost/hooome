@@ -24,7 +24,7 @@ public interface TradeConst {
     public enum StockStatusEnum {
         // 股票状态 1:正常 2:停牌
         ENABLE(1, "正常"),
-        DISABLE(2, "禁用"),
+        DISABLE(2, "清仓"),
         ;
 
         private final Integer code;

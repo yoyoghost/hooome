@@ -1,5 +1,6 @@
 package me.hooo.service.trade;
 
+import me.hooo.common.trade.vo.StockStatusVO;
 import me.hooo.common.trade.vo.StockTypeVO;
 import me.hooo.common.trade.vo.TradeStockInfoVO;
 
@@ -24,4 +25,6 @@ public interface ITradeService {
      * @return
      */
     List<TradeStockInfoVO> getStockInfoList();
+
+    List<StockStatusVO> getStockStatus();
 }
