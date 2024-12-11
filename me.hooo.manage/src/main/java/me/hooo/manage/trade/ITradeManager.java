@@ -9,4 +9,10 @@ public interface ITradeManager {
     Long addStockInfo(TradeStockInfoDO tradeStockInfoDO);
 
     List<TradeStockInfoDO> getStockInfoList();
+
+    TradeStockInfoDO selectStockInfoById(Long id);
+
+    void updateStockInfo(TradeStockInfoDO tradeStockInfoDO);
+
+    void deleteById(Long id);
 }

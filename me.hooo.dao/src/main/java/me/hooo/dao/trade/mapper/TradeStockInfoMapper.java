@@ -11,4 +11,10 @@ public interface TradeStockInfoMapper {
     Long insert(TradeStockInfoDO tradeStockInfoDO);
 
     List<TradeStockInfoDO> selectList();
+
+    TradeStockInfoDO selectStockInfoById(Long id);
+
+    void updateStockInfo(TradeStockInfoDO tradeStockInfoDO);
+
+    void deleteById(Long id);
 }

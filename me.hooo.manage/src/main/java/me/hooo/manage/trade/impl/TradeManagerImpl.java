@@ -25,4 +25,19 @@ public class TradeManagerImpl implements ITradeManager {
     public List<TradeStockInfoDO> getStockInfoList() {
         return tradeStockInfoMapper.selectList();
     }
+
+    @Override
+    public TradeStockInfoDO selectStockInfoById(Long id) {
+        return tradeStockInfoMapper.selectStockInfoById(id);
+    }
+
+    @Override
+    public void updateStockInfo(TradeStockInfoDO tradeStockInfoDO) {
+        tradeStockInfoMapper.updateStockInfo(tradeStockInfoDO);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        tradeStockInfoMapper.deleteById(id);
+    }
 }

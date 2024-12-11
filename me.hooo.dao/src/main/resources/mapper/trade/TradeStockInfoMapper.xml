@@ -49,4 +49,39 @@
     <select id="selectList" resultType="me.hooo.dao.trade.model.TradeStockInfoDO">
         SELECT * FROM trade_stock_info WHERE deleted = 0
     </select>
+
+    <select id="selectStockInfoById" resultType="me.hooo.dao.trade.model.TradeStockInfoDO">
+        SELECT * FROM trade_stock_info WHERE id = #{id} and  deleted = 0
+    </select>
+
+    <update id="updateStockInfo">
+        UPDATE trade_stock_info
+        <set>
+            <if test="stockCode != null and stockCode != ''">
+                stock_code = #{stockCode},
+            </if>
+            <if test="stockName != null and stockName != ''">
+                stock_name = #{stockName},
+            </if>
+            <if test="stockType != null">
+                stock_type = #{stockType},
+            </if>
+
+            <if test="stockMinimumHoldingPeriod != null">
+                stock_minimum_holding_period = #{stockMinimumHoldingPeriod},
+            </if>
+
+            <if test="stockStatus != null">
+                stock_status = #{stockStatus},
+            </if>
+            <if test="stockRemark != null and stockRemark != ''">
+                stock_remark = #{stockRemark},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        UPDATE trade_stock_info SET deleted = 1 WHERE id = #{id} and deleted = 0
+    </delete>
 </mapper>

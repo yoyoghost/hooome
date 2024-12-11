@@ -27,4 +27,8 @@ public interface ITradeService {
     List<TradeStockInfoVO> getStockInfoList();
 
     List<StockStatusVO> getStockStatus();
+
+    TradeStockInfoVO editStockInfo(TradeStockInfoVO tradeStockInfoVO);
+
+    TradeStockInfoVO delStockInfo(TradeStockInfoVO tradeStockInfoVO);
 }

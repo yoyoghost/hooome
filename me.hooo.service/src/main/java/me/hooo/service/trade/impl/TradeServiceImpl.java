@@ -1,7 +1,10 @@
 package me.hooo.service.trade.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
+import me.hooo.common.constant.StatusEnum;
+import me.hooo.common.exception.ServiceException;
 import me.hooo.common.trade.TradeConst;
 import me.hooo.common.trade.vo.StockStatusVO;
 import me.hooo.common.trade.vo.StockTypeVO;
@@ -71,5 +74,38 @@ public class TradeServiceImpl implements ITradeService {
         }
         log.info("getStockStatus:{}", list);
         return list;
+    }
+
+    @Override
+    public TradeStockInfoVO editStockInfo(TradeStockInfoVO tradeStockInfoVO) {
+        // 新增 TradeStockInfo 到数据库
+        log.info("editStockInfo:{}", tradeStockInfoVO);
+        // 查询一下
+        TradeStockInfoDO tradeStockInfoDO = tradeManager.selectStockInfoById(tradeStockInfoVO.getId());
+        if (tradeStockInfoDO == null) {
+            throw new ServiceException(StatusEnum.DATA_NOT_EXIST, "股票信息不存在");
+        }
+        // 赋值
+        TradeStockInfoDO tradeStockInfoDOUpdate = BeanUtil.copyProperties(tradeStockInfoVO, TradeStockInfoDO.class);
+        // 更新
+        tradeManager.updateStockInfo(tradeStockInfoDOUpdate);
+        // 重新获取赋值
+        tradeStockInfoDO = tradeManager.selectStockInfoById(tradeStockInfoVO.getId());
+        BeanUtils.copyProperties(tradeStockInfoDO, tradeStockInfoVO);
+        return tradeStockInfoVO;
+    }
+
+    @Override
+    public TradeStockInfoVO delStockInfo(TradeStockInfoVO tradeStockInfoVO) {
+        // 新增 TradeStockInfo 到数据库
+        log.info("delStockInfo:{}", tradeStockInfoVO);
+        // 查询一下
+        TradeStockInfoDO tradeStockInfoDO = tradeManager.selectStockInfoById(tradeStockInfoVO.getId());
+        if (tradeStockInfoDO == null) {
+            throw new ServiceException(StatusEnum.DATA_NOT_EXIST, "股票信息不存在");
+        }
+        // 更新
+        tradeManager.deleteById(tradeStockInfoVO.getId());
+        return tradeStockInfoVO;
     }
 }

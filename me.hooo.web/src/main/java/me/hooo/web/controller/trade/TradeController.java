@@ -43,6 +43,25 @@ public class TradeController {
         return HooomeResponse.success(tradeStockInfo);
     }
 
+    @PostMapping("editStockInfo")
+    public HooomeResponse<TradeStockInfoVO> editStockInfo(@RequestBody TradeStockInfoVO tradeStockInfoVO) {
+        TradeStockInfoVO tradeStockInfo = tradeService.editStockInfo(tradeStockInfoVO);
+        return HooomeResponse.success(tradeStockInfo);
+    }
+
+    @PostMapping("delStockInfo")
+    public HooomeResponse<TradeStockInfoVO> delStockInfo(@RequestBody TradeStockInfoVO tradeStockInfoVO) {
+        TradeStockInfoVO tradeStockInfo = tradeService.delStockInfo(tradeStockInfoVO);
+        return HooomeResponse.success(tradeStockInfo);
+    }
+
+
+    @PostMapping("setStockStatus")
+    public HooomeResponse<TradeStockInfoVO> setStockStatus(@RequestBody TradeStockInfoVO tradeStockInfoVO) {
+        TradeStockInfoVO tradeStockInfo = tradeService.editStockInfo(tradeStockInfoVO);
+        return HooomeResponse.success(tradeStockInfo);
+    }
+
     /**
      * 获取股票信息列表
      */
