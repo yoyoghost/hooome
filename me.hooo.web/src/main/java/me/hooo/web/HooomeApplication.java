@@ -2,10 +2,8 @@ package me.hooo.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
-@ComponentScan(basePackages = {"me.hooo.*"})
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"me.hooo"})
 public class HooomeApplication {
 
     public static void main(String[] args) {
