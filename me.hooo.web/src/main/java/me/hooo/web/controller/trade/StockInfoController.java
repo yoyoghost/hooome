@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 股票信息管理接口
+ */
 @Slf4j
 @RestController
-@RequestMapping("trade")
-public class TradeController {
+@RequestMapping("trade/stockInfo")
+public class StockInfoController {
 
     @Autowired
     ITradeService tradeService;
@@ -69,6 +72,17 @@ public class TradeController {
     public HooomeResponse<List<TradeStockInfoVO>> getStockInfoList() {
         List<TradeStockInfoVO> tradeStockInfoVOList = tradeService.getStockInfoList();
         log.info("getStockInfoList:{}", tradeStockInfoVOList);
+        return HooomeResponse.success(tradeStockInfoVOList);
+    }
+
+    /**
+     * 获取东方财富交易的股票信息列表
+     * @return
+     */
+    @PostMapping("getDCStockInfoList")
+    public HooomeResponse<List<TradeStockInfoVO>> getDCStockInfoList() {
+        List<TradeStockInfoVO> tradeStockInfoVOList = tradeService.getDCStockInfoList();
+        log.info("getDCStockInfoList:{}", tradeStockInfoVOList);
         return HooomeResponse.success(tradeStockInfoVOList);
     }
 }

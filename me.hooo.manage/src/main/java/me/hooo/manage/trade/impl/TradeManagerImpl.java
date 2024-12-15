@@ -3,6 +3,7 @@ package me.hooo.manage.trade.impl;
 import me.hooo.common.trade.vo.TradeStockInfoVO;
 import me.hooo.dao.trade.mapper.TradeInfoMapper;
 import me.hooo.dao.trade.mapper.TradeStockInfoMapper;
+import me.hooo.dao.trade.model.TradeInfoDO;
 import me.hooo.dao.trade.model.TradeStockInfoDO;
 import me.hooo.manage.trade.ITradeManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,17 @@ public class TradeManagerImpl implements ITradeManager {
     @Autowired
     private TradeStockInfoMapper tradeStockInfoMapper;
 
+    @Autowired
+    private TradeInfoMapper tradeInfoMapper;
+
     @Override
     public Long addStockInfo(TradeStockInfoDO tradeStockInfoDO) {
         return tradeStockInfoMapper.insert(tradeStockInfoDO);
     }
 
     @Override
-    public List<TradeStockInfoDO> getStockInfoList() {
-        return tradeStockInfoMapper.selectList();
+    public List<TradeStockInfoDO> getStockInfoList(List<Integer> dcStockTypeList) {
+        return tradeStockInfoMapper.selectList(dcStockTypeList);
     }
 
     @Override
@@ -39,5 +43,10 @@ public class TradeManagerImpl implements ITradeManager {
     @Override
     public void deleteById(Long id) {
         tradeStockInfoMapper.deleteById(id);
+    }
+
+    @Override
+    public List<TradeInfoDO> getTradeInfoList(Integer tradeType, List<Integer> tradeStatusList) {
+        return tradeInfoMapper.selectListByTradeType(tradeType, tradeStatusList);
     }
 }

@@ -8,7 +8,9 @@ import me.hooo.common.exception.ServiceException;
 import me.hooo.common.trade.TradeConst;
 import me.hooo.common.trade.vo.StockStatusVO;
 import me.hooo.common.trade.vo.StockTypeVO;
+import me.hooo.common.trade.vo.TradeInfoVO;
 import me.hooo.common.trade.vo.TradeStockInfoVO;
+import me.hooo.dao.trade.model.TradeInfoDO;
 import me.hooo.dao.trade.model.TradeStockInfoDO;
 import me.hooo.manage.trade.ITradeManager;
 import me.hooo.service.trade.ITradeService;
@@ -52,7 +54,7 @@ public class TradeServiceImpl implements ITradeService {
 
     @Override
     public List<TradeStockInfoVO> getStockInfoList() {
-        List<TradeStockInfoDO> stockInfoList = tradeManager.getStockInfoList();
+        List<TradeStockInfoDO> stockInfoList = tradeManager.getStockInfoList(null);
         if (CollectionUtils.isEmpty(stockInfoList)) {
             return Lists.newArrayList();
         }
@@ -107,5 +109,38 @@ public class TradeServiceImpl implements ITradeService {
         // 更新
         tradeManager.deleteById(tradeStockInfoVO.getId());
         return tradeStockInfoVO;
+    }
+
+    @Override
+    public List<TradeStockInfoVO> getDCStockInfoList() {
+        List<Integer> dcStockTypeList = TradeConst.StockTypeEnum.getDCStockType();
+        List<TradeStockInfoDO> stockInfoList = tradeManager.getStockInfoList(dcStockTypeList);
+        if (CollectionUtils.isEmpty(stockInfoList)) {
+            return Lists.newArrayList();
+        }
+        List<TradeStockInfoVO> list = Lists.newArrayList();
+        for (TradeStockInfoDO tradeStockInfoDO : stockInfoList) {
+            TradeStockInfoVO vo = new TradeStockInfoVO();
+            BeanUtils.copyProperties(tradeStockInfoDO, vo);
+            list.add(vo);
+        }
+        return list;
+    }
+
+    @Override
+    public List<TradeInfoVO> getTradeInfoList() {
+        // 获取进行中的交易信息列表
+        List<TradeInfoDO> tradeInfoList = tradeManager.getTradeInfoList(TradeConst.TradeTypeEnum.BUY.getCode(),
+                Lists.newArrayList(TradeConst.TradeStatusEnum.BUY_IN.getCode(), TradeConst.TradeStatusEnum.PART_SELL.getCode()));
+        if (CollectionUtils.isEmpty(tradeInfoList)) {
+            return Lists.newArrayList();
+        }
+        List<TradeInfoVO> list = Lists.newArrayList();
+        for (TradeInfoDO tradeInfoDO : tradeInfoList) {
+            TradeInfoVO vo = new TradeInfoVO();
+            BeanUtils.copyProperties(tradeInfoDO, vo);
+            list.add(vo);
+        }
+        return list;
     }
 }

@@ -49,4 +49,17 @@
             </trim>
         </trim>
     </insert>
+
+    <select id="selectListByTradeType" resultType="me.hooo.dao.trade.model.TradeInfoDO">
+        SELECT id, stock_id, stock_name, trade_date, trade_point, trade_number, trade_amount, trade_type, trade_remaining_number, update_time
+            from trade_info
+        where trade_type = #{tradeType}
+        <if test="tradeStatusList != null and tradeStatusList.size > 0" >
+            and trade_status in
+            <foreach collection="tradeStatusList" item="tradeStatus" open="(" close=")" separator=",">
+                #{tradeStatus}
+            </foreach>
+        </if>
+        and deleted = 0
+    </select>
 </mapper>

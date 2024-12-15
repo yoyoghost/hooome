@@ -48,6 +48,12 @@
     </insert>
     <select id="selectList" resultType="me.hooo.dao.trade.model.TradeStockInfoDO">
         SELECT * FROM trade_stock_info WHERE deleted = 0
+        <if test='null != list and list.size > 0'>
+            and stock_type in
+            <foreach collection="list" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
     </select>
 
     <select id="selectStockInfoById" resultType="me.hooo.dao.trade.model.TradeStockInfoDO">
@@ -74,7 +80,7 @@
             <if test="stockStatus != null">
                 stock_status = #{stockStatus},
             </if>
-            <if test="stockRemark != null and stockRemark != ''">
+            <if test="stockRemark != null">
                 stock_remark = #{stockRemark},
             </if>
         </set>

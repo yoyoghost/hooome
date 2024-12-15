@@ -2,6 +2,7 @@ package me.hooo.service.trade;
 
 import me.hooo.common.trade.vo.StockStatusVO;
 import me.hooo.common.trade.vo.StockTypeVO;
+import me.hooo.common.trade.vo.TradeInfoVO;
 import me.hooo.common.trade.vo.TradeStockInfoVO;
 
 import java.util.List;
@@ -31,4 +32,12 @@ public interface ITradeService {
     TradeStockInfoVO editStockInfo(TradeStockInfoVO tradeStockInfoVO);
 
     TradeStockInfoVO delStockInfo(TradeStockInfoVO tradeStockInfoVO);
+
+    List<TradeStockInfoVO> getDCStockInfoList();
+
+    /**
+     * 获取交易信息列表
+     * @return
+     */
+    List<TradeInfoVO> getTradeInfoList();
 }
