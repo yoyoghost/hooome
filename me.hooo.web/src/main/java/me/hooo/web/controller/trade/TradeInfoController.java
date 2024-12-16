@@ -2,10 +2,7 @@ package me.hooo.web.controller.trade;
 
 import lombok.extern.slf4j.Slf4j;
 import me.hooo.common.HooomeResponse;
-import me.hooo.common.trade.vo.StockStatusVO;
-import me.hooo.common.trade.vo.StockTypeVO;
 import me.hooo.common.trade.vo.TradeInfoVO;
-import me.hooo.common.trade.vo.TradeStockInfoVO;
 import me.hooo.service.trade.ITradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,31 +23,34 @@ public class TradeInfoController {
     @Autowired
     ITradeService tradeService;
 
-    @PostMapping("addStockInfo")
-    public HooomeResponse<TradeStockInfoVO> addStockInfo(@RequestBody TradeStockInfoVO tradeStockInfoVO) {
-        TradeStockInfoVO tradeStockInfo = tradeService.addStockInfo(tradeStockInfoVO);
-        return HooomeResponse.success(tradeStockInfo);
+    @PostMapping("addTradeInfo")
+    public HooomeResponse<TradeInfoVO> addTradeInfo(@RequestBody TradeInfoVO tradeInfoVO) {
+        log.info("addTradeInfo:{}", tradeInfoVO);
+        TradeInfoVO tradeInfo = tradeService.addTradeInfo(tradeInfoVO);
+        return HooomeResponse.success(tradeInfo);
     }
 
-    @PostMapping("editStockInfo")
-    public HooomeResponse<TradeStockInfoVO> editStockInfo(@RequestBody TradeStockInfoVO tradeStockInfoVO) {
-        TradeStockInfoVO tradeStockInfo = tradeService.editStockInfo(tradeStockInfoVO);
-        return HooomeResponse.success(tradeStockInfo);
+    @PostMapping("editTradeInfo")
+    public HooomeResponse<TradeInfoVO> editTradeInfo(@RequestBody TradeInfoVO tradeInfoVO) {
+        log.info("editTradeInfo:{}", tradeInfoVO);
+        TradeInfoVO tradeInfo = tradeService.editTradeInfo(tradeInfoVO);
+        return HooomeResponse.success(tradeInfo);
     }
 
-    @PostMapping("delStockInfo")
-    public HooomeResponse<TradeStockInfoVO> delStockInfo(@RequestBody TradeStockInfoVO tradeStockInfoVO) {
-        TradeStockInfoVO tradeStockInfo = tradeService.delStockInfo(tradeStockInfoVO);
-        return HooomeResponse.success(tradeStockInfo);
+    @PostMapping("delTradeInfo")
+    public HooomeResponse<TradeInfoVO> delTradeInfo(@RequestBody TradeInfoVO tradeInfoVO) {
+        log.info("delTradeInfo:{}", tradeInfoVO);
+        TradeInfoVO tradeInfo = tradeService.delTradeInfo(tradeInfoVO);
+        return HooomeResponse.success(tradeInfo);
     }
 
     /**
      * 获取股票信息列表
      */
-    @PostMapping("getTradeInfoList")
-    public HooomeResponse<List<TradeInfoVO>> getTradeInfoList() {
-        List<TradeInfoVO> tradeInfoList = tradeService.getTradeInfoList();
-        log.info("getTradeInfoList:{}", tradeInfoList);
+    @PostMapping("getInProgressTradeInfoList")
+    public HooomeResponse<List<TradeInfoVO>> getInProgressTradeInfoList() {
+        List<TradeInfoVO> tradeInfoList = tradeService.getInProgressTradeInfoList();
+        log.info("getInProgressTradeInfoList:{}", tradeInfoList);
         return HooomeResponse.success(tradeInfoList);
     }
 }

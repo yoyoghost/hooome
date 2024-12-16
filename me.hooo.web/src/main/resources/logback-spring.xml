@@ -15,6 +15,12 @@
         </encoder>
     </appender>
 
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
     <!--每天生成一个日志文件，保存15天的日志文件。rollingFile是用来切分文件的 -->
     <appender name="FILE"
               class="ch.qos.logback.core.rolling.RollingFileAppender">

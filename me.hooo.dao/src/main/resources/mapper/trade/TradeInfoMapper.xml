@@ -17,37 +17,63 @@
         create_user,
         create_user_name,
         update_user,
-        update_user_name,
+        update_user_name
         )
-        <trim prefix="VALUES" suffixOverrides=")">
-            <trim prefix="(" suffix=")" suffixOverrides=", ">
+        values (
+        <choose>
+            <when test="accountId != null">
                 #{accountId,jdbcType=BIGINT},
-                #{parentTradeInfoId,jdbcType=BIGINT},
-                #{stockId,jdbcType=BIGINT},
-                <if test="stockName != null">
-                    #{stockName,jdbcType=VARCHAR},
-                </if>
-                <if test="tradeDate != null">
-                    #{tradeDate,jdbcType=DATE},
-                </if>
-                <if test="tradePoint != null">
-                    #{tradePoint,jdbcType=DATE},
-                </if>
-                #{tradeNumber,jdbcType=INTEGER},
-                #{tradeAmount,jdbcType=DOUBLE},
-                #{tradeType,jdbcType=TINYINT},
-                #{tradeRemainingNumber,jdbcType=INTEGER},
-                #{tradeStatus,jdbcType=TINYINT},
+            </when>
+            <otherwise>
+                0,
+            </otherwise>
+        </choose>
+        #{parentTradeInfoId,jdbcType=BIGINT},
+        #{stockId,jdbcType=BIGINT},
+        #{stockName,jdbcType=VARCHAR},
+        #{tradeDate,jdbcType=DATE},
+        #{tradePoint,jdbcType=INTEGER},
+        #{tradeNumber,jdbcType=INTEGER},
+        #{tradeAmount,jdbcType=DOUBLE},
+        #{tradeType,jdbcType=TINYINT},
+        #{tradeRemainingNumber,jdbcType=INTEGER},
+        #{tradeStatus,jdbcType=TINYINT},
+        <choose>
+            <when test="createUser != null">
                 #{createUser,jdbcType=BIGINT},
-                <if test="createUserName != null and createUserName != ''">
-                    #{createUserName,jdbcType=VARCHAR},
-                </if>
+            </when>
+            <otherwise>
+                0,
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="createUserName != null">
+                #{createUserName,jdbcType=VARCHAR},
+            </when>
+            <otherwise>
+                '',
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="updateUser != null">
                 #{updateUser,jdbcType=BIGINT},
-                <if test="updateUserName != null and updateUserName != ''">
-                    #{updateUserName,jdbcType=VARCHAR},
-                </if>
-            </trim>
-        </trim>
+            </when>
+            <otherwise>
+                0,
+            </otherwise>
+        </choose>
+
+        <choose>
+            <when test="updateUserName != null">
+                #{updateUserName,jdbcType=VARCHAR}
+            </when>
+            <otherwise>
+                ''
+            </otherwise>
+        </choose>
+        )
     </insert>
 
     <select id="selectListByTradeType" resultType="me.hooo.dao.trade.model.TradeInfoDO">
@@ -62,4 +88,25 @@
         </if>
         and deleted = 0
     </select>
+
+    <select id="selectTradeInfoById" resultType="me.hooo.dao.trade.model.TradeInfoDO">
+        select * from trade_info where id = #{id} and deleted = 0
+    </select>
+
+    <update id="updateTradeInfo">
+        update trade_info set
+            stock_id = #{stockId},
+            stock_name = #{stockName},
+            trade_date = #{tradeDate},
+            trade_point = #{tradePoint},
+            trade_number = #{tradeNumber},
+            trade_amount = #{tradeAmount},
+            trade_type = #{tradeType},
+            trade_remaining_number = #{tradeRemainingNumber}
+            where id = #{id} and deleted = 0
+    </update>
+
+    <delete id="deleteById">
+        update trade_info set deleted = 1 where id = #{id} and deleted = 0
+    </delete>
 </mapper>

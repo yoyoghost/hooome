@@ -41,12 +41,32 @@ public class TradeManagerImpl implements ITradeManager {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteStockInfoById(Long id) {
         tradeStockInfoMapper.deleteById(id);
     }
 
     @Override
     public List<TradeInfoDO> getTradeInfoList(Integer tradeType, List<Integer> tradeStatusList) {
         return tradeInfoMapper.selectListByTradeType(tradeType, tradeStatusList);
+    }
+
+    @Override
+    public void addTradeInfo(TradeInfoDO tradeInfoDO) {
+        tradeInfoMapper.insert(tradeInfoDO);
+    }
+
+    @Override
+    public TradeInfoDO selectTradeInfoById(Long id) {
+        return tradeInfoMapper.selectTradeInfoById(id);
+    }
+
+    @Override
+    public void updateTradeInfo(TradeInfoDO tradeInfoDO) {
+        tradeInfoMapper.updateTradeInfo(tradeInfoDO);
+    }
+
+    @Override
+    public void deleteTradeInfoById(Long id) {
+        tradeInfoMapper.deleteById(id);
     }
 }

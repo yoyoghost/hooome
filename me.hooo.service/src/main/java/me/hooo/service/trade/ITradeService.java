@@ -39,5 +39,16 @@ public interface ITradeService {
      * 获取交易信息列表
      * @return
      */
-    List<TradeInfoVO> getTradeInfoList();
+    List<TradeInfoVO> getInProgressTradeInfoList();
+
+    /**
+     * 增加交易信息
+     * @param tradeInfoVO
+     * @return
+     */
+    TradeInfoVO addTradeInfo(TradeInfoVO tradeInfoVO);
+
+    TradeInfoVO editTradeInfo(TradeInfoVO tradeInfoVO);
+
+    TradeInfoVO delTradeInfo(TradeInfoVO tradeInfoVO);
 }

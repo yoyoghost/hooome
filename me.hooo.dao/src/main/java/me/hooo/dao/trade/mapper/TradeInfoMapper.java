@@ -11,4 +11,10 @@ public interface TradeInfoMapper {
     int insert(TradeInfoDO tradeInfo);
 
     List<TradeInfoDO> selectListByTradeType(@Param("tradeType") Integer tradeType, @Param("tradeStatusList") List<Integer> tradeStatusList);
+
+    TradeInfoDO selectTradeInfoById(Long id);
+
+    void updateTradeInfo(TradeInfoDO tradeInfoDO);
+
+    void deleteById(Long id);
 }

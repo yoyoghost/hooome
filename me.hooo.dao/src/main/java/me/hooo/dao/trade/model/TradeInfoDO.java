@@ -12,7 +12,7 @@ public class TradeInfoDO {
     private Long stockId; // 股票id
     private String stockName; // 股票名称
     private Date tradeDate; // 交易日期
-    private Date tradePoint; // 交易点位
+    private Integer tradePoint; // 交易点位
     private Integer tradeNumber; // 交易数量
     private Double tradeAmount; // 交易金额
     private Integer tradeType; // 1:买入 2:卖出

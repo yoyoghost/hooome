@@ -15,7 +15,15 @@ public interface ITradeManager {
 
     void updateStockInfo(TradeStockInfoDO tradeStockInfoDO);
 
-    void deleteById(Long id);
+    void deleteStockInfoById(Long id);
 
     List<TradeInfoDO> getTradeInfoList(Integer tradeType, List<Integer> tradeStatusList);
+
+    void addTradeInfo(TradeInfoDO tradeInfoDO);
+
+    TradeInfoDO selectTradeInfoById(Long id);
+
+    void updateTradeInfo(TradeInfoDO tradeInfoDO);
+
+    void deleteTradeInfoById(Long id);
 }
