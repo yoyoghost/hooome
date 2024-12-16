@@ -155,8 +155,6 @@ public class TradeServiceImpl implements ITradeService {
 
     @Override
     public TradeInfoVO addTradeInfo(TradeInfoVO tradeInfoVO) {
-        log.info("addTradeInfo:{}", tradeInfoVO);
-
         // 新增 TradeStockInfo 到数据库
         Integer tradeType = tradeInfoVO.getTradeType();
         // 买入时，默认设置为买入中
