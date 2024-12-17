@@ -102,6 +102,9 @@
             trade_number = #{tradeNumber},
             trade_amount = #{tradeAmount},
             trade_type = #{tradeType},
+            <if test="tradeStatus != null">
+                trade_status = #{tradeStatus},
+            </if>
             trade_remaining_number = #{tradeRemainingNumber}
             where id = #{id} and deleted = 0
     </update>

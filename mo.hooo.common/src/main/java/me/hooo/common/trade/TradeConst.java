@@ -64,7 +64,7 @@ public interface TradeConst {
     public enum TradeStatusEnum {
         BUY_IN(1, "买入"),
         PART_SELL(2, "进行中/部分卖出"),
-        ALL_SELL(2, "已完成/全部卖出"),
+        ALL_SELL(3, "已完成/全部卖出"),
         ;
 
         private final Integer code;

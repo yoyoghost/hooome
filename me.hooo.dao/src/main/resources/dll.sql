@@ -14,21 +14,21 @@ CREATE TABLE `trade_stock_info` (
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `deleted` tinyint unsigned DEFAULT '0' COMMENT '0-未删除 null/1-已删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='交易信息';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COMMENT='交易信息';
 
 CREATE TABLE `trade_info` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键，无业务含义',
   `account_id` bigint unsigned NOT NULL DEFAULT '0' COMMENT '用户id',
   `parent_trade_info_id` bigint unsigned NOT NULL DEFAULT '0' COMMENT '用来记录卖出的时候指定卖出的是那一笔买入的订单',
   `stock_id` bigint unsigned NOT NULL COMMENT '股票id',
-  `stock_name` bigint unsigned NOT NULL COMMENT '股票名称',
+  `stock_name` varchar(32) NOT NULL COMMENT '股票名称',
   `trade_date` date DEFAULT NULL COMMENT '交易日期',
-  `trade_point` date DEFAULT NULL COMMENT '交易点位',
+  `trade_point` int DEFAULT NULL COMMENT '交易点位',
   `trade_number` int DEFAULT '0' COMMENT '交易数量',
   `trade_amount` double DEFAULT '0' COMMENT '交易金额',
   `trade_type` tinyint DEFAULT '0' COMMENT '1:买入 2:卖出',
   `trade_remaining_number` int DEFAULT '0' COMMENT '交易卖出后剩余数量',
-  `trade_status` tinyint DEFAULT '0' COMMENT '交易状态 0:待卖出 1:完成 2:进行中',
+  `trade_status` tinyint DEFAULT '0' COMMENT '交易状态  1:待卖出 2:进行中 3:完成 ',
   `create_user` bigint unsigned DEFAULT '0' COMMENT '创建人id',
   `create_user_name` varchar(32) DEFAULT '' COMMENT '创建人姓名',
   `update_user` bigint unsigned DEFAULT '0' COMMENT '更新人id',
@@ -37,4 +37,4 @@ CREATE TABLE `trade_info` (
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `deleted` tinyint unsigned DEFAULT '0' COMMENT '0-未删除 null/1-已删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='交易信息';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 COMMENT='交易信息';

@@ -145,7 +145,7 @@ public class TradeServiceImpl implements ITradeService {
             vo.setIsCanEdit(NumberUtils.INTEGER_ONE);
             BeanUtils.copyProperties(tradeInfoDO, vo);
             // 如果不是全部卖出，则不可以编辑
-            if(!Objects.equals(tradeInfoDO.getTradeNumber(), tradeInfoDO.getTradeRemainingNumber())) {
+            if (!Objects.equals(tradeInfoDO.getTradeNumber(), tradeInfoDO.getTradeRemainingNumber())) {
                 vo.setIsCanEdit(NumberUtils.INTEGER_ZERO);
             }
             list.add(vo);
@@ -159,13 +159,20 @@ public class TradeServiceImpl implements ITradeService {
         Integer tradeType = tradeInfoVO.getTradeType();
         // 买入时，默认设置为买入中
         if (tradeType.intValue() == TradeConst.TradeTypeEnum.BUY.getCode()) {
-            tradeInfoVO.setTradeStatus(TradeConst.TradeStatusEnum.BUY_IN.getCode());
-            tradeInfoVO.setTradeRemainingNumber(tradeInfoVO.getTradeNumber());
+            return handleBuyInTradeInfo(tradeInfoVO);
         } else {
-            tradeInfoVO.setTradeStatus(TradeConst.TradeStatusEnum.ALL_SELL.getCode());
-            tradeInfoVO.setTradeRemainingNumber(NumberUtils.INTEGER_ZERO);
+            return handleSellOutTradeInfo(tradeInfoVO);
         }
+    }
 
+    /**
+     * 处理新增买入的订单
+     * @param tradeInfoVO
+     * @return
+     */
+    private TradeInfoVO handleBuyInTradeInfo(TradeInfoVO tradeInfoVO) {
+        tradeInfoVO.setTradeStatus(TradeConst.TradeStatusEnum.BUY_IN.getCode());
+        tradeInfoVO.setTradeRemainingNumber(tradeInfoVO.getTradeNumber());
         TradeInfoDO tradeInfoDO = new TradeInfoDO();
         BeanUtils.copyProperties(tradeInfoVO, tradeInfoDO);
         tradeManager.addTradeInfo(tradeInfoDO);
@@ -174,16 +181,58 @@ public class TradeServiceImpl implements ITradeService {
         return tradeInfoVO;
     }
 
+    /**
+     * 处理新增卖出的订单
+     * @param tradeInfoVO
+     * @return
+     */
+    private TradeInfoVO handleSellOutTradeInfo(TradeInfoVO tradeInfoVO) {
+        // 查询父订单
+        Long parentTradeInfoId = tradeInfoVO.getParentTradeInfoId();
+        TradeInfoDO tradeInfoDO = tradeManager.selectTradeInfoById(parentTradeInfoId);
+        if (null == tradeInfoDO) {
+            throw new ServiceException(StatusEnum.DATA_NOT_EXIST, "买入交易信息不存在");
+        }
+
+        // 判断卖出数量是否大于剩余卖出数量
+        Integer sellTradeNumber = tradeInfoVO.getTradeNumber();
+        Integer remainingNumber = tradeInfoDO.getTradeRemainingNumber();
+        if(sellTradeNumber > remainingNumber) {
+            throw new ServiceException(StatusEnum.SERVICE_ERROR, "卖出数量不能大于剩余卖出数量");
+        }
+
+        // 更新剩余交易数量
+        tradeInfoDO.setTradeRemainingNumber(remainingNumber - sellTradeNumber);
+        if(sellTradeNumber.intValue() == remainingNumber) {
+            tradeInfoDO.setTradeStatus(TradeConst.TradeStatusEnum.ALL_SELL.getCode());
+        } else {
+            tradeInfoDO.setTradeStatus(TradeConst.TradeStatusEnum.PART_SELL.getCode());
+        }
+        tradeManager.updateTradeInfo(tradeInfoDO);
+
+        TradeInfoDO sellTradeInfoDO = new TradeInfoDO();
+        BeanUtils.copyProperties(tradeInfoVO, sellTradeInfoDO);
+        sellTradeInfoDO.setTradeStatus(TradeConst.TradeStatusEnum.ALL_SELL.getCode());
+        sellTradeInfoDO.setTradeRemainingNumber(NumberUtils.INTEGER_ONE);
+        tradeManager.addTradeInfo(sellTradeInfoDO);
+
+        // 前端还需要根据剩余数量来判断是否展示
+        TradeInfoVO tradeInfoVONew = new TradeInfoVO();
+        BeanUtils.copyProperties(tradeInfoDO, tradeInfoVONew);
+        tradeInfoVONew.setIsCanEdit(NumberUtils.INTEGER_ZERO);// 不可编辑
+        return tradeInfoVONew;
+    }
+
     @Override
     public TradeInfoVO editTradeInfo(TradeInfoVO tradeInfoVO) {
         Long id = tradeInfoVO.getId();
         TradeInfoDO tradeInfoDO = tradeManager.selectTradeInfoById(id);
         // 编辑的时候首先判断是否存在
-        if(null == tradeInfoDO) {
+        if (null == tradeInfoDO) {
             throw new ServiceException(StatusEnum.DATA_NOT_EXIST, "交易信息不存在");
         }
         // 在判断买入数量和剩余数量是否一致，如果不一致则不允许编辑
-        if(!Objects.equals(tradeInfoDO.getTradeNumber(), tradeInfoDO.getTradeRemainingNumber())) {
+        if (!Objects.equals(tradeInfoDO.getTradeNumber(), tradeInfoDO.getTradeRemainingNumber())) {
             throw new ServiceException(StatusEnum.SERVICE_ERROR, "交易信息不允许编辑");
         }
 
@@ -201,11 +250,11 @@ public class TradeServiceImpl implements ITradeService {
         Long id = tradeInfoVO.getId();
         TradeInfoDO tradeInfoDO = tradeManager.selectTradeInfoById(id);
         // 编辑的时候首先判断是否存在
-        if(null == tradeInfoDO) {
+        if (null == tradeInfoDO) {
             throw new ServiceException(StatusEnum.DATA_NOT_EXIST, "交易信息不存在");
         }
         // 在判断买入数量和剩余数量是否一致，如果不一致则不允许编辑
-        if(!Objects.equals(tradeInfoDO.getTradeNumber(), tradeInfoDO.getTradeRemainingNumber())) {
+        if (!Objects.equals(tradeInfoDO.getTradeNumber(), tradeInfoDO.getTradeRemainingNumber())) {
             throw new ServiceException(StatusEnum.SERVICE_ERROR, "交易信息不允许编辑");
         }
         // 更新deleted字段
