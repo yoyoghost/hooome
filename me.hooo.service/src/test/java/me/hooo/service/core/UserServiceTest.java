@@ -2,6 +2,7 @@ package me.hooo.service.core;
 
 
 import lombok.extern.slf4j.Slf4j;
+import me.hooo.common.base.TokenBO;
 import me.hooo.dao.core.model.User;
 import me.hooo.service.HooomeTestApplication;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ public class UserServiceTest {
         mockUser.setUsername("default");
         mockUser.setPassword("123");
 
-        User login = userService.login(mockUser.getUsername(), mockUser.getPassword());
+        TokenBO login = userService.login(mockUser.getUsername(), mockUser.getPassword());
         log.info("login: {}", login);
     }
 }
