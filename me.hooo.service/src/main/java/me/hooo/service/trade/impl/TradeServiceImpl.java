@@ -213,7 +213,7 @@ public class TradeServiceImpl implements ITradeService {
         TradeInfoDO sellTradeInfoDO = new TradeInfoDO();
         BeanUtils.copyProperties(tradeInfoVO, sellTradeInfoDO);
         sellTradeInfoDO.setTradeStatus(TradeConst.TradeStatusEnum.ALL_SELL.getCode());
-        sellTradeInfoDO.setTradeRemainingNumber(NumberUtils.INTEGER_ONE);
+        sellTradeInfoDO.setTradeRemainingNumber(NumberUtils.INTEGER_ZERO);
         tradeManager.addTradeInfo(sellTradeInfoDO);
 
         // 前端还需要根据剩余数量来判断是否展示
