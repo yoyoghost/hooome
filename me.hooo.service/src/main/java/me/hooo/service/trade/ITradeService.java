@@ -51,4 +51,10 @@ public interface ITradeService {
     TradeInfoVO editTradeInfo(TradeInfoVO tradeInfoVO);
 
     TradeInfoVO delTradeInfo(TradeInfoVO tradeInfoVO);
+
+    /**
+     * 获取最低点位的前两条交易信息
+     * @return
+     */
+    List<TradeInfoVO> getSmallTradePoint();
 }

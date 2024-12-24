@@ -1,5 +1,6 @@
 package me.hooo.manage.trade.impl;
 
+import me.hooo.common.trade.vo.TradeInfoVO;
 import me.hooo.common.trade.vo.TradeStockInfoVO;
 import me.hooo.dao.trade.mapper.TradeInfoMapper;
 import me.hooo.dao.trade.mapper.TradeStockInfoMapper;
@@ -68,5 +69,10 @@ public class TradeManagerImpl implements ITradeManager {
     @Override
     public void deleteTradeInfoById(Long id) {
         tradeInfoMapper.deleteById(id);
+    }
+
+    @Override
+    public List<TradeInfoVO> getSmallTradePoint() {
+        return tradeInfoMapper.selectSmallTradePoint();
     }
 }

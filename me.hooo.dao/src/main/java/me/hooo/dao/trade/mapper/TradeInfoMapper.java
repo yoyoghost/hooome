@@ -1,5 +1,6 @@
 package me.hooo.dao.trade.mapper;
 
+import me.hooo.common.trade.vo.TradeInfoVO;
 import me.hooo.dao.trade.model.TradeInfoDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -17,4 +18,6 @@ public interface TradeInfoMapper {
     void updateTradeInfo(TradeInfoDO tradeInfoDO);
 
     void deleteById(Long id);
+
+    List<TradeInfoVO> selectSmallTradePoint();
 }

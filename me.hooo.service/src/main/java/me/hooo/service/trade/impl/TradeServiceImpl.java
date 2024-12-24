@@ -261,4 +261,9 @@ public class TradeServiceImpl implements ITradeService {
         tradeManager.deleteTradeInfoById(id);
         return tradeInfoVO;
     }
+
+    @Override
+    public List<TradeInfoVO> getSmallTradePoint() {
+        return tradeManager.getSmallTradePoint();
+    }
 }

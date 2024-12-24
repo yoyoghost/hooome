@@ -1,5 +1,6 @@
 package me.hooo.manage.trade;
 
+import me.hooo.common.trade.vo.TradeInfoVO;
 import me.hooo.dao.trade.model.TradeInfoDO;
 import me.hooo.dao.trade.model.TradeStockInfoDO;
 
@@ -26,4 +27,6 @@ public interface ITradeManager {
     void updateTradeInfo(TradeInfoDO tradeInfoDO);
 
     void deleteTradeInfoById(Long id);
+
+    List<TradeInfoVO> getSmallTradePoint();
 }

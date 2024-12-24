@@ -93,6 +93,19 @@
         select * from trade_info where id = #{id} and deleted = 0
     </select>
 
+    <select id="selectSmallTradePoint" resultType="me.hooo.common.trade.vo.TradeInfoVO">
+        select * from (
+        SELECT
+        stock_name, trade_point, trade_remaining_number,
+        ROW_NUMBER() OVER (PARTITION BY stock_name ORDER BY trade_point, stock_name) AS rn
+        FROM
+        trade_info
+        WHERE
+        trade_type = 1
+        AND trade_status IN (1, 2)
+        )t wHERE t.rn <![CDATA[<=]]>  2 order by stock_name, trade_point
+    </select>
+
     <update id="updateTradeInfo">
         update trade_info set
             stock_id = #{stockId},
