@@ -106,6 +106,19 @@
         )t wHERE t.rn <![CDATA[<=]]>  2 order by stock_name, trade_point
     </select>
 
+    <select id="getTradeInfoListByParentId" resultType="me.hooo.common.trade.vo.TradeInfoVO">
+        SELECT *
+        from trade_info
+        where trade_type = 2 and trade_status = 3
+        <if test="list != null and list.size > 0" >
+            and parent_trade_info_id in
+            <foreach collection="list" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
+        and deleted = 0
+    </select>
+
     <update id="updateTradeInfo">
         update trade_info set
             stock_id = #{stockId},

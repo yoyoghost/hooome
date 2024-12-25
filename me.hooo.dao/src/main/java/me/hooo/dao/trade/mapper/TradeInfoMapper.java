@@ -20,4 +20,6 @@ public interface TradeInfoMapper {
     void deleteById(Long id);
 
     List<TradeInfoVO> selectSmallTradePoint();
+
+    List<TradeInfoVO> getTradeInfoListByParentId(List<Long> idList);
 }

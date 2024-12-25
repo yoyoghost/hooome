@@ -75,4 +75,9 @@ public class TradeManagerImpl implements ITradeManager {
     public List<TradeInfoVO> getSmallTradePoint() {
         return tradeInfoMapper.selectSmallTradePoint();
     }
+
+    @Override
+    public List<TradeInfoVO> getTradeInfoListByParentId(List<Long> idList) {
+        return tradeInfoMapper.getTradeInfoListByParentId(idList);
+    }
 }

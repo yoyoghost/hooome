@@ -53,4 +53,14 @@ public class TradeInfoController {
         log.info("getInProgressTradeInfoList:{}", tradeInfoList);
         return HooomeResponse.success(tradeInfoList);
     }
+
+    /**
+     * 获取已完成交易信息列表（已完成交易指的是交易状态为已完成的交易）
+     */
+    @PostMapping("getCompleteTradeInfoList")
+    public HooomeResponse<List<TradeInfoVO>> getCompleteTradeInfoList() {
+        List<TradeInfoVO> tradeInfoList = tradeService.getCompleteTradeInfoList();
+        log.info("getCompleteTradeInfoList:{}", tradeInfoList);
+        return HooomeResponse.success(tradeInfoList);
+    }
 }

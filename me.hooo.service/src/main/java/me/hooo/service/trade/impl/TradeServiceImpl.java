@@ -2,6 +2,7 @@ package me.hooo.service.trade.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import me.hooo.common.constant.StatusEnum;
 import me.hooo.common.exception.ServiceException;
@@ -20,8 +21,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -265,5 +269,35 @@ public class TradeServiceImpl implements ITradeService {
     @Override
     public List<TradeInfoVO> getSmallTradePoint() {
         return tradeManager.getSmallTradePoint();
+    }
+
+    @Override
+    public List<TradeInfoVO> getCompleteTradeInfoList() {
+        // 获取已完成的交易信息列表
+        List<TradeInfoDO> tradeInfoList = tradeManager.getTradeInfoList(TradeConst.TradeTypeEnum.BUY.getCode(),
+                Lists.newArrayList(TradeConst.TradeStatusEnum.ALL_SELL.getCode()));
+
+        if (CollectionUtils.isEmpty(tradeInfoList)) {
+            return Lists.newArrayList();
+        }
+
+        // 将tradeInfoList中的id集合转换成Long类型的idList
+        List<Long> idList = tradeInfoList.stream().map(TradeInfoDO::getId).toList();
+        List<TradeInfoVO> sellTradeInfoList = tradeManager.getTradeInfoListByParentId(idList);
+        Map<Long, List<TradeInfoVO>> sellTradeInfoMap = Maps.newHashMap();
+        if (!CollectionUtils.isEmpty(sellTradeInfoList)) {
+            // 将 sellTradeInfoList 根据 parentTradeInfoId 进行分组成map
+            sellTradeInfoMap = sellTradeInfoList.stream().collect(Collectors.groupingBy(TradeInfoVO::getParentTradeInfoId));
+        }
+
+        List<TradeInfoVO> list = Lists.newArrayList();
+        for (TradeInfoDO tradeInfoDO : tradeInfoList) {
+            TradeInfoVO vo = new TradeInfoVO();
+            BeanUtils.copyProperties(tradeInfoDO, vo);
+            Long id = tradeInfoDO.getId();
+            vo.setCompletedTradeInfoList(sellTradeInfoMap.getOrDefault(id, null));
+            list.add(vo);
+        }
+        return list;
     }
 }

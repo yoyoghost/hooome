@@ -29,4 +29,6 @@ public interface ITradeManager {
     void deleteTradeInfoById(Long id);
 
     List<TradeInfoVO> getSmallTradePoint();
+
+    List<TradeInfoVO> getTradeInfoListByParentId(List<Long> idList);
 }

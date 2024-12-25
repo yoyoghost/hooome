@@ -57,4 +57,6 @@ public interface ITradeService {
      * @return
      */
     List<TradeInfoVO> getSmallTradePoint();
+
+    List<TradeInfoVO> getCompleteTradeInfoList();
 }

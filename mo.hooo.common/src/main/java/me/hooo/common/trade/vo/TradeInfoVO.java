@@ -5,6 +5,7 @@ import lombok.Data;
 import me.hooo.common.util.CustomDateSerializer;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class TradeInfoVO {
@@ -24,4 +25,5 @@ public class TradeInfoVO {
     private Date createTime; // 创建时间
     private Date updateTime; // 修改时间当作最终时间使用
     private Integer isCanEdit; // 是否可以编辑 0:不可以 1:可以  是否可以删除 0:不可以 1:可以
+    List<TradeInfoVO> completedTradeInfoList; // 完成交易的列表
 }
